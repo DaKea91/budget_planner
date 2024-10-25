@@ -1,4 +1,8 @@
+import dotenv from 'dotenv'; // Import dotenv to load environment variables
 import { MongoClient } from 'mongodb';
+
+// Load environment variables
+dotenv.config();
 
 const uri = process.env.MONGODB_URI;
 let client;
@@ -11,7 +15,13 @@ if (!uri) {
 // Only create a new MongoClient instance if one doesn’t already exist
 if (!client) {
     client = new MongoClient(uri);
-    clientPromise = client.connect();
+    clientPromise = client.connect()
+        .then(() => {
+            console.log('Connected to MongoDB');
+        })
+        .catch((error) => {
+            console.error('Failed to connect to MongoDB', error);
+        });
 }
 
 async function getDatabase() {
