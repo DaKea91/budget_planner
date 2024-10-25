@@ -1,26 +1,22 @@
 import { MongoClient } from 'mongodb';
 
-// Use environment variables for sensitive information
-const uri = process.env.MONGODB_URI; // Ensure this is set in your environment variables
-const client = new MongoClient(uri);
+const uri = process.env.MONGODB_URI;
+let client;
+let clientPromise;
 
-// Connect once when the module is loaded
-async function connectToDatabase() {
-    try {
-        await client.connect();
-        console.log('Connected to MongoDB');
-    } catch (error) {
-        console.error('Failed to connect to MongoDB', error);
-    }
+if (!uri) {
+    throw new Error("Please add your MongoDB URI to the environment variables.");
 }
 
-// Call the connection function
-connectToDatabase().catch(console.dir);
+// Only create a new MongoClient instance if one doesn’t already exist
+if (!client) {
+    client = new MongoClient(uri);
+    clientPromise = client.connect();
+}
 
-// You can create a function to interact with the database
 async function getDatabase() {
+    await clientPromise; // Wait for the client to connect if it's not already
     return client.db('budget-planner-cluster');
 }
 
-// Export the database connection
 export { getDatabase };

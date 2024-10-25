@@ -1,11 +1,4 @@
-import dotenv from 'dotenv';
-dotenv.config();
-
-import { MongoClient } from 'mongodb';
 import { getDatabase } from './db.js'; // Adjust the path to your db.js file
-
-const uri = process.env.MONGODB_URI; // Ensure this is set in your environment variables
-const client = new MongoClient(uri);
 
 // Export the handler function
 export default async function handler(req, res) {
