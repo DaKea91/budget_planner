@@ -1,4 +1,4 @@
-import { getDatabase } from './db.js'; // Adjust the path to your db.js file
+import { getDatabase } from '../../lib/db'; // Adjust the path to your db.js file
 
 // Export the handler function
 export default async function handler(req, res) {

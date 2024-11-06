@@ -1,4 +1,4 @@
-import { getDatabase } from './db.js'; // Adjust the path if needed
+import { getDatabase } from '../../lib/db'; // Adjust the path if needed
 import bcrypt from 'bcrypt';
 
 export default async function handler(req, res) {
@@ -25,8 +25,8 @@ export default async function handler(req, res) {
 
             res.status(201).json({ message: 'User registered', id: result.insertedId });
         } catch (error) {
-            console.error(error); // Log the error for debugging
-            res.status(500).json({ error: 'Failed to register user' });
+            console.error('Registration Error:', error); // Log the error for debugging
+            res.status(500).json({ error: 'Failed to register user', details: error.message });
         }
     } else {
         res.setHeader('Allow', ['POST']);
