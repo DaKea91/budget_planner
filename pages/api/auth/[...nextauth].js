@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";  // Ensure bcrypt is imported for password comparison
-import { getDatabase } from "../../lib/db"; // Adjust the import path as needed
+import { getDatabase } from "../../../lib/db"; // Adjust the import path as needed
 
 export default NextAuth({
     providers: [

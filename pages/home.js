@@ -8,7 +8,7 @@ const Home = () => {
 
     useEffect(() => {
         if (status === 'unauthenticated') {
-            router.push('/auth/login');
+            router.push('/api/auth/login');
         }
     }, [status, router]);
 
