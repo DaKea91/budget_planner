@@ -10,9 +10,6 @@ const Layout = ({ children }) => {
     await signOut({ callbackUrl: "/auth/login" });
   };
 
-  const { data: session } = useSession(); // Example usage of useSession
-  const router = useRouter(); // Example usage of useRouter
-
   return (
     <div>
       {/* AppBar (Header) */}
