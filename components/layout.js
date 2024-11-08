@@ -5,8 +5,8 @@ import { useRouter } from "next/router"; // Router to handle page redirection
 import { AppBar, Toolbar, Typography, Button, Container } from "@mui/material"; // MUI components
 
 const Layout = ({ children }) => {
-  const { data: session, status } = useSession(); // Get session data from useSession hook
-  const router = useRouter(); // Access the router for redirection
+  //const { data: session, status } = useSession(); // Get session data from useSession hook
+  //const router = useRouter(); // Access the router for redirection
 
   // Handle the logout process
   const handleLogout = async () => {

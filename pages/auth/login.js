@@ -128,7 +128,7 @@ const Login = () => {
                     </span>
                 ) : (
                     <span>
-                        Don't have an account?{' '}
+                        Don&apos;t have an account?{' '}
                         <Button onClick={() => setIsRegistering(true)} color="primary">
                             Register
                         </Button>
