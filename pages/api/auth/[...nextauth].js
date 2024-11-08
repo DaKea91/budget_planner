@@ -3,9 +3,9 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";  // Ensure bcrypt is imported for password comparison
 import { getDatabase } from "../../../lib/db"; // Adjust the import path as needed
 
-export default NextAuth({
+export default NextAuth.default({
     providers: [
-        CredentialsProvider({
+        CredentialsProvider.default({
             name: 'Credentials',
             credentials: {
                 email: { label: "Email", type: "text", placeholder: "email@example.com" },
