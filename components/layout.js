@@ -1,8 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { AppBar, Toolbar, Typography, Button, Container } from "@mui/material";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
 
 const Layout = ({ children }) => {
   // Handle the logout process
