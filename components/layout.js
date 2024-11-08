@@ -1,12 +1,17 @@
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { AppBar, Toolbar, Typography, Button, Container } from "@mui/material";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const Layout = ({ children }) => {
   // Handle the logout process
   const handleLogout = async () => {
     await signOut({ callbackUrl: "/auth/login" });
   };
+
+  const { data: session } = useSession(); // Example usage of useSession
+  const router = useRouter(); // Example usage of useRouter
 
   return (
     <div>
