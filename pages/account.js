@@ -1,4 +1,4 @@
-import { getSession } from 'next-auth/react'; // Use getSession to check session server-side
+import { getSession } from "next-auth/react";  // Import getSession for server-side session check
 
 const Account = ({ session }) => {
   if (!session) {
@@ -13,14 +13,14 @@ const Account = ({ session }) => {
   );
 };
 
-// Protect the page using getSession on server-side
+// Server-side session check
 export async function getServerSideProps(context) {
-  const session = await getSession(context); // Get session
+  const session = await getSession(context); // Get session on the server
 
   if (!session) {
     return {
       redirect: {
-        destination: '/auth/login', // Redirect to login page if no session
+        destination: "/auth/login", // Redirect to login page if not logged in
         permanent: false,
       },
     };
@@ -32,4 +32,3 @@ export async function getServerSideProps(context) {
 }
 
 export default Account;
-

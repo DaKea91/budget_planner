@@ -1,12 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { AppBar, Toolbar, Typography, Button, Container } from "@mui/material";
 
 const Layout = ({ children }) => {
+  const { data: session } = useSession();  // Fetch session data using useSession
+
   // Handle the logout process
   const handleLogout = async () => {
-    await signOut({ callbackUrl: "/auth/login" });
+    await signOut({ callbackUrl: "/auth/login" });  // Logout and redirect to login
   };
 
   return (
@@ -18,16 +19,29 @@ const Layout = ({ children }) => {
             Budget Planner
           </Typography>
 
-          {/* Links and actions depending on the session */}
+          {/* Always visible links */}
           <Button color="inherit" component={Link} href="/home">
             Home
           </Button>
 
-          {/* ... other links and buttons as needed */}
+          {/* Conditionally render "Account" and "Change Password" links if logged in */}
+          {session && (
+            <>
+              <Button color="inherit" component={Link} href="/account">
+                Account
+              </Button>
+              <Button color="inherit" component={Link} href="/change-password">
+                Change Password
+              </Button>
+            </>
+          )}
 
-          <Button color="inherit" onClick={handleLogout}>
-            Logout
-          </Button>
+          {/* Conditionally render "Logout" button if logged in */}
+          {session && (
+            <Button color="inherit" onClick={handleLogout}>
+              Logout
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
 
