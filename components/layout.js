@@ -33,8 +33,12 @@ const Layout = ({ children }) => {
               <Button color="inherit" component={Link} href="/change-password">
                 Change Password
               </Button>
+              <Button color="inherit" component={Link} href="/expenses">
+                Expenses
+              </Button>
             </>
           )}
+
 
           {/* Conditionally render "Logout" button if logged in */}
           {session && (

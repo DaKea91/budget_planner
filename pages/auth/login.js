@@ -11,6 +11,12 @@ const Login = () => {
     const [isRegistering, setIsRegistering] = useState(false); // Toggle between login and register
     const router = useRouter();
 
+    // Email validation regex (simple check for user@domain.something format)
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+    // Password validation regex (at least 10 characters, 1 uppercase letter, 1 number, 1 symbol)
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{10,}$/;
+
     // Handle login submission
     const handleLoginSubmit = async (e) => {
         e.preventDefault();
@@ -36,6 +42,18 @@ const Login = () => {
     const handleRegisterSubmit = async (e) => {
         e.preventDefault();
         setError(null);
+
+        // Validate email format
+        if (!emailRegex.test(email)) {
+            setError('Please enter a valid email address.');
+            return;
+        }
+
+        // Validate password format
+        if (!passwordRegex.test(password)) {
+            setError('Password must be at least 10 characters long, include one uppercase letter, one number, and one special character.');
+            return;
+        }
 
         // Send registration data to the correct API path
         const res = await fetch('/api/register', {  // Update to correct API path

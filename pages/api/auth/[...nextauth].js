@@ -17,20 +17,26 @@ export default NextAuth.default({
                     const database = await getDatabase();
                     const users = database.collection('users');
 
+                    // Find the user by email
                     const user = await users.findOne({ email: credentials.email });
                     if (!user) {
                         console.error(`User not found for email: ${credentials.email}`);
                         return null; // Could also throw an error if needed
                     }
 
+                    // Compare the password
                     const passwordMatch = await bcrypt.compare(credentials.password, user.passwordHash);
                     if (!passwordMatch) {
                         console.error('Password comparison failed for user:', user.email);
                         return null; // Could throw a more specific error message if needed
                     }
 
-                    // Return a user object that contains essential info
-                    return { id: user._id.toString(), email: user.email, username: user.username }; // Ensure `_id` is a string
+                    // Return a user object with essential info, including MongoDB _id
+                    return { 
+                        id: user._id.toString(), // Ensure `_id` is a string
+                        email: user.email,
+                        username: user.username
+                    };
                 } catch (error) {
                     console.error("Error during authorization:", error);
                     return null; // Handle errors and return null on failure
@@ -46,18 +52,20 @@ export default NextAuth.default({
     },
     callbacks: {
         async jwt({ token, user }) {
+            // If user exists, store the user information in the token
             if (user) {
-                token.id = user.id;  // Make sure user.id is available (as a string)
-                token.email = user.email; // You can also store email if needed
-                token.username = user.username; // Optional: Store username in token if needed
+                token.id = user.id;  // Store MongoDB _id in token
+                token.email = user.email; // Optionally store email
+                token.username = user.username; // Optionally store username
             }
-            return token; // Return the token object
+            return token; // Return the updated token
         },
         async session({ session, token }) {
-            session.user.id = token.id; // Assign `id` to the session
-            session.user.email = token.email; // Optionally, add email to the session
-            session.user.username = token.username; // Optionally, add username to the session
-            return session; // Return the session object
+            // Attach user data to session from the token
+            session.user.id = token.id; // Attach the MongoDB _id
+            session.user.email = token.email; // Attach email to the session
+            session.user.username = token.username; // Attach username to the session
+            return session; // Return the updated session object
         }
     },
     secret: process.env.NEXTAUTH_SECRET, // Ensure the secret is set for JWT encryption
